@@ -32,8 +32,17 @@ libraryDependencies ++= Seq(
 )
 
 
-bintrayPackageLabels := Seq("aws", "dynamodb", "s3", "ses", "simpledb", "sns", "sqs", "async", "future")
+publishMavenStyle := true
 
+publishTo := {
+  val nexus = "https://my.artifact.repo.net/"
+  if (isSnapshot.value)
+    Some("snapshots" at "https://nexus.tundra-shared.com/repository/maven-snapshots/")
+  else
+    Some("releases" at "https://nexus.tundra-shared.com/repository/maven-releases/")
+}
+
+credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
 
 
 lazy val awsWrapTest = project.
